@@ -4370,6 +4370,15 @@ clang_cc1_optawk='# BEGIN GENERATED clang_cc1_optawk
 # END GENERATED clang_cc1_optawk
 # manually added
 /^(-dumpdir)$/     { fullopt=$0; canonopt=deesc("-dumpdir"); snarfing_optarg=1; inc=2; next; }
+/^-E$/ { fullopt=$0; canonopt=deesc("-E"); inc=1; do_output(fullopt); next; }
+/^-fno-rounding-math$/ { fullopt=$0; canonopt=deesc("-fno-rounding-math"); inc=1; do_output(fullopt); next; }
+/^-save-temps$/ { fullopt=$0; canonopt=deesc("-save-temps"); inc=1; do_output(fullopt); next; }
+/^-no-integrated-as$/ { fullopt=$0; canonopt=deesc("-no-integrated-as"); inc=1; do_output(fullopt); next; }
+/^-debug-info-kind=(.*)$/ { fullopt=$0; canonopt=deesc("-debug-info-kind"); optarg=gensub(/(-debug-info-kind=)(.*)/, "\\2", 1); inc=1; do_output(fullopt); next; }
+/^-dwarf-version=(.*)$/ { fullopt=$0; canonopt=deesc("-dwarf-version"); optarg=gensub(/(-dwarf-version=)(.*)/, "\\2", 1); inc=1; do_output(fullopt); next; }
+/^-debugger-tuning=(.*)$/ { fullopt=$0; canonopt=deesc("-debugger-tuning"); optarg=gensub(/(-debugger-tuning=)(.*)/, "\\2", 1); inc=1; do_output(fullopt); next; }
+/^(-D)(.*)$/     { fullopt=$0; canonopt=deesc("-D"); optarg=gensub(/(-D)(.*)/, "\\2", 1); inc=1; do_output(fullopt); next; }
+/^(-O)(.*)$/     { fullopt=$0; canonopt=deesc("-O"); optarg=gensub(/(-O)(.*)/, "\\2", 1); inc=1; do_output(fullopt); next; }
 '
 clang_driver_optawk='# BEGIN GENERATED clang_driver_optawk
 /^(-z)$/     { fullopt=$0; canonopt=deesc("-z"); snarfing_optarg=1; inc=2; next; }
@@ -5540,6 +5549,7 @@ gcc_driver_optawk='# BEGIN GENERATED gcc_driver_optawk
 # manually added ones (FIXME: report gcc bugs!):
 /^-wrapper$/ { fullopt=$0; canonopt="-wrapper"; snarfing_optarg=1; inc=2; next; }
 /^-no-integrated-cpp$/ { fullopt=$0; canonopt="-no-integrated-cpp"; inc=1; do_output(fullopt); next; }
+/^(-l)(.*)$/ { fullopt=$0; canonopt="-l"; inc=1; optarg=gensub(/^(-l)(.*)$/, "\\2", 1); do_output(fullopt); next; }
 /^(-g)([1-9])$/ { fullopt=$0; canonopt="-g"; optarg=gensub(/^(-g)([1-9])$/, "\\2", 1); inc=1; do_output(fullopt); next; }
 /^(-g)$/ { fullopt=$0; canonopt="-g"; inc=1; optarg=""; do_output(fullopt); next; }
 # remember that in the driver, unlike cc1, -MD takes no argument
